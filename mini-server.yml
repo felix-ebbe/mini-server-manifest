@@ -1,0 +1,59 @@
+header:
+  version: 14
+machine: rockchip-rk3588-rock-5b
+distro: poky
+target: mini-server
+repos:
+  meta-mini-server:
+    url: git@github.com:felix-ebbe/meta-mini-server.git
+    branch: main
+    path: layers/meta-mini-server
+  meta-rockchip:
+    url: https://github.com/radxa/meta-rockchip.git
+    branch: master
+    commit: 1112964b5ccb02441751c11f6233b484ed80390e
+    path: layers/meta-rockchip
+  meta-browser: 
+    url: https://github.com/OSSystems/meta-browser.git
+    branch: master
+    commit: d3a5f63c385e1e621fa1fef975024f8622a535ea
+    path: layers/meta-browser
+    layers:
+      meta-firefox:
+  meta-clang:
+    url: https://github.com/kraj/meta-clang
+    branch: master
+    commit: e7dceb1c92caf7f21ef1d7b49c85328c30cffd90
+    path: layers/meta-clang
+  meta-openembedded:
+    url: git://git.openembedded.org/meta-openembedded
+    branch: scarthgap
+    path: layers/meta-openembedded
+    layers:
+      meta-oe:
+      meta-filesystems:
+      meta-networking:
+      meta-python:
+      meta-initramfs:
+  poky:
+    url: https://github.com/yoctoproject/poky.git
+    branch: master
+    commit: 7eebbdb6c45149e8bf7abbf6a9f0c8068f7668f7
+    path: layers/poky
+    layers:
+      bitbake: "excluded"
+      meta-poky:
+      meta:
+    
+
+local_conf_header:
+  meta-mini-server: |
+    EXTRA_IMAGE_FEATURES ?= "debug-tweaks"
+    PATCHRESOLVE = "noop"
+    CONF_VERSION = "2"
+    DISTRO_FEATURES:remove = "ptest"
+    DISTRO_FEATURES:remove = "vulkan"
+    IMAGE_INSTALL:append = " udev-conf-rockchip os-release ifupdown dhcpcd"
+    ROCKCHIP_KERNEL_IMAGES = "1"
+    DISTRO_FEATURES:append = " egl"
+    IMAGE_INSTALL:append = " alsa-utils rockchip-alsa-config pulseaudio-server alsa-plugins-pulseaudio-conf"
