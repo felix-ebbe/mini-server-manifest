@@ -6,9 +6,9 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -22,9 +22,9 @@ jobs:
 
     # container:
     #   image: ghcr.io/siemens/kas/kas:latest
-    #   volumes: 
+    #   volumes:
     #     - build:/build
-    
+
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -32,10 +32,12 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: echo Hello, world!
-
+        run: |
+          mkdir -p mini-server
+          cd mini-server
+          kas build ../mini-server-manifest/mini-server.yml
       # Runs a set of commands using the runners shell
       #- name: Run a multi-line script
       #  run: |
-       #   echo Add other actions to build,
-       #   echo test, and deploy your project.
+      #   echo Add other actions to build,
+      #   echo test, and deploy your project.
